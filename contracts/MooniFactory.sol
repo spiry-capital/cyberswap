@@ -4,14 +4,14 @@ pragma solidity ^0.6.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./libraries/UniERC20.sol";
-import "./Mooniswap.sol";
+import "./Cyberswap.sol";
 
 
-contract MooniFactory is Ownable {
+contract CyberFactory is Ownable {
     using UniERC20 for IERC20;
 
     event Deployed(
-        address indexed mooniswap,
+        address indexed cyberswap,
         address indexed token1,
         address indexed token2
     );
@@ -19,11 +19,11 @@ contract MooniFactory is Ownable {
     uint256 public constant MAX_FEE = 0.003e18; // 0.3%
 
     uint256 public fee;
-    Mooniswap[] public allPools;
-    mapping(Mooniswap => bool) public isPool;
-    mapping(IERC20 => mapping(IERC20 => Mooniswap)) public pools;
+    Cyberswap[] public allPools;
+    mapping(Cyberswap => bool) public isPool;
+    mapping(IERC20 => mapping(IERC20 => Cyberswap)) public pools;
 
-    function getAllPools() external view returns(Mooniswap[] memory) {
+    function getAllPools() external view returns(Cyberswap[] memory) {
         return allPools;
     }
 
@@ -32,9 +32,9 @@ contract MooniFactory is Ownable {
         fee = newFee;
     }
 
-    function deploy(IERC20 tokenA, IERC20 tokenB) public returns(Mooniswap pool) {
+    function deploy(IERC20 tokenA, IERC20 tokenB) public returns(Cyberswap pool) {
         require(tokenA != tokenB, "Factory: not support same tokens");
-        require(pools[tokenA][tokenB] == Mooniswap(0), "Factory: pool already exists");
+        require(pools[tokenA][tokenB] == Cyberswap(0), "Factory: pool already exists");
 
         (IERC20 token1, IERC20 token2) = sortTokens(tokenA, tokenB);
         IERC20[] memory tokens = new IERC20[](2);
@@ -44,10 +44,10 @@ contract MooniFactory is Ownable {
         string memory symbol1 = token1.uniSymbol();
         string memory symbol2 = token2.uniSymbol();
 
-        pool = new Mooniswap(
+        pool = new Cyberswap(
             tokens,
-            string(abi.encodePacked("Mooniswap V1 (", symbol1, "-", symbol2, ")")),
-            string(abi.encodePacked("MOON-V1-", symbol1, "-", symbol2))
+            string(abi.encodePacked("Cyberswap V1 (", symbol1, "-", symbol2, ")")),
+            string(abi.encodePacked("CYBER-V1-", symbol1, "-", symbol2))
         );
 
         pool.transferOwnership(owner());
