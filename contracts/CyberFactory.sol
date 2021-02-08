@@ -1,11 +1,18 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.6.0;
-
+//                     SPIRY.RO - SPIRY CAPITAL PRODUCTION
+//
+//  _______ __   __ ______  _______  ______ _______ _  _  _ _______  _____
+// |         \_/   |_____] |______ |_____/ |______ |  |  | |_____| |_____]
+// |_____     |    |_____] |______ |    \_ ______| |__|__| |     | |
+//
+//
+//   @SpiryBTC @developerdavi
+//
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./libraries/UniERC20.sol";
 import "./Cyberswap.sol";
-
 
 contract CyberFactory is Ownable {
     using UniERC20 for IERC20;
@@ -23,7 +30,7 @@ contract CyberFactory is Ownable {
     mapping(Cyberswap => bool) public isPool;
     mapping(IERC20 => mapping(IERC20 => Cyberswap)) public pools;
 
-    function getAllPools() external view returns(Cyberswap[] memory) {
+    function getAllPools() external view returns (Cyberswap[] memory) {
         return allPools;
     }
 
@@ -32,9 +39,16 @@ contract CyberFactory is Ownable {
         fee = newFee;
     }
 
-    function deploy(IERC20 tokenA, IERC20 tokenB) public returns(Cyberswap pool) {
+    function deploy(
+        IERC20 tokenA,
+        IERC20 tokenB,
+        address devAddr
+    ) public returns (Cyberswap pool) {
         require(tokenA != tokenB, "Factory: not support same tokens");
-        require(pools[tokenA][tokenB] == Cyberswap(0), "Factory: pool already exists");
+        require(
+            pools[tokenA][tokenB] == Cyberswap(0),
+            "Factory: pool already exists"
+        );
 
         (IERC20 token1, IERC20 token2) = sortTokens(tokenA, tokenB);
         IERC20[] memory tokens = new IERC20[](2);
@@ -46,8 +60,11 @@ contract CyberFactory is Ownable {
 
         pool = new Cyberswap(
             tokens,
-            string(abi.encodePacked("Cyberswap V1 (", symbol1, "-", symbol2, ")")),
-            string(abi.encodePacked("CYBER-V1-", symbol1, "-", symbol2))
+            string(
+                abi.encodePacked("Cyberswap V1 (", symbol1, "-", symbol2, ")")
+            ),
+            string(abi.encodePacked("CYBER-V1-", symbol1, "-", symbol2)),
+            devAddr
         );
 
         pool.transferOwnership(owner());
@@ -56,14 +73,14 @@ contract CyberFactory is Ownable {
         allPools.push(pool);
         isPool[pool] = true;
 
-        emit Deployed(
-            address(pool),
-            address(token1),
-            address(token2)
-        );
+        emit Deployed(address(pool), address(token1), address(token2));
     }
 
-    function sortTokens(IERC20 tokenA, IERC20 tokenB) public pure returns(IERC20, IERC20) {
+    function sortTokens(IERC20 tokenA, IERC20 tokenB)
+        public
+        pure
+        returns (IERC20, IERC20)
+    {
         if (tokenA < tokenB) {
             return (tokenA, tokenB);
         }
