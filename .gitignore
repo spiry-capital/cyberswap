@@ -3,3 +3,4 @@ coverage
 coverage.json
 dist
 build
+*.log
