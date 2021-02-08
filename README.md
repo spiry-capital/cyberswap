@@ -1,9 +1,9 @@
-# Mooniswap
+# Cyberswap
 
 [![Build Status](https://github.com/CryptoManiacsZone/mooniswap/workflows/CI/badge.svg)](https://github.com/CryptoManiacsZone/mooniswap/actions)
 [![Coverage Status](https://coveralls.io/repos/github/CryptoManiacsZone/mooniswap/badge.svg?branch=master)](https://coveralls.io/github/CryptoManiacsZone/mooniswap?branch=master)
 
-AMM with a beautiful mind
+AMM with a beautiful mind on an underdog network.
 
 ## Factory Address
 [https://etherscan.io/address/0x71CD6666064C3A1354a3B4dca5fA1E2D3ee7D303](https://etherscan.io/address/0x71CD6666064C3A1354a3B4dca5fA1E2D3ee7D303)
@@ -15,7 +15,7 @@ AMM with a beautiful mind
 * @param dst token address that will received
 * @param amount amount to exchange
 * @param minReturn minimal amount of the dst token that will receive (if result < minReturn then transaction fails)
-* @param referral 1/20 from LP fees will be minted to referral wallet address (in liquidity token) (in case of address(0) no mints) 
+* @param referral 1/20 from LP fees will be minted to referral wallet address (in liquidity token) (in case of address(0) mints to developer(deployer)) 
 * @return result received amount
 */
 function swap(address src, address dst, uint256 amount, uint256 minReturn, address referral) external payable returns(uint256 result);
