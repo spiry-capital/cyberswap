@@ -2,12 +2,7 @@
 
 pragma solidity ^0.6.0;
 //                     SPIRY.RO - SPIRY CAPITAL PRODUCTION
-//
-//  _______ __   __ ______  _______  ______ _______ _  _  _ _______  _____ 
-// |         \_/   |_____] |______ |_____/ |______ |  |  | |_____| |_____]
-// |_____     |    |_____] |______ |    \_ ______| |__|__| |     | |      
-//                                                                      
-//
+
 //   @SpiryBTC @developerdavi
 //
 import "@openzeppelin/contracts/access/Ownable.sol";
